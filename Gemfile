@@ -45,6 +45,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem 'rspec-rails'
+  gem 'database_cleaner'
 end
 
 group :development do
