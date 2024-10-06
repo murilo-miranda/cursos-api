@@ -18,8 +18,12 @@ class CourseController < ApplicationController
   end
 
   def update
-    updated_course = CourseService::Editor.new(course_params).execute
-    render json: {id: updated_course.id, title: updated_course.title, description: updated_course.description}, status: :ok
+    begin
+      updated_course = CourseService::Editor.new(course_params).execute
+      render json: {id: updated_course.id, title: updated_course.title, description: updated_course.description}, status: :ok
+    rescue ActiveRecord::RecordNotFound => error
+      render json: error.message, status: :not_found
+    end
   end
 
   private
