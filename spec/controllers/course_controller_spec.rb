@@ -56,4 +56,37 @@ describe CourseController, type: :controller do
       end
     end
   end
+
+  context 'DELETE' do
+    subject { delete :destroy, params: params}
+    let(:course) {
+      Course.create(title: 'Title', description: 'Description', end_date: DateTime.now)
+    }
+
+    context 'success' do
+      let(:params) {{ id: course.id }}
+
+      it 'deletes specified course' do
+        course
+
+        expect(subject).to have_http_status(204)
+        expect(response.body).to eq ("{}")
+        expect(Course.count).to eq 0
+      end
+    end
+
+    context 'failure' do
+      context 'id not found' do
+        let(:params) {{ id: 999 }}
+
+        it 'do not deletes specified course' do
+          course
+  
+          expect(subject).to have_http_status(404)
+          expect(response.body).to eq ("Couldn't find Course with 'id'=#{params[:id]}")
+          expect(Course.count).to eq 1
+        end
+      end
+    end
+  end
 end
