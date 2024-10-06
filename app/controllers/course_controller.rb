@@ -7,4 +7,14 @@ class CourseController < ApplicationController
       render json: error.message, status: :bad_request
     end
   end
+
+  def destroy
+    begin
+      course = Course.find(params[:id])
+      course.destroy
+      render json: {}, status: :no_content
+    rescue ActiveRecord::RecordNotFound => error
+      render json: error.message, status: :not_found
+    end
+  end
 end
