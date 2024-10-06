@@ -10,8 +10,7 @@ class CourseController < ApplicationController
 
   def destroy
     begin
-      course = Course.find(params[:id])
-      course.destroy
+      CourseService::Destroyer.new(params).execute
       render json: {}, status: :no_content
     rescue ActiveRecord::RecordNotFound => error
       render json: error.message, status: :not_found
