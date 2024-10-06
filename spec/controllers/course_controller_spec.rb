@@ -1,6 +1,26 @@
 require 'rails_helper'
 
 describe CourseController, type: :controller do
+  context 'INDEX' do
+    subject { get :index }
+    let!(:course1) {
+      Course.create(title: 'Course 1', description: 'Description', end_date: DateTime.now)
+    }
+    let!(:course2) {
+      Course.create(title: 'Course 2', description: 'Description', end_date: DateTime.now)
+    }
+    let!(:course3) {
+      Course.create(title: 'Course 3', description: 'Description', end_date: DateTime.now)
+    }
+
+    context 'success' do
+      it 'return a list of courses' do
+        expect(subject).to have_http_status(200)
+        expect(response.body).to eq (Course.all.to_json)
+      end
+    end
+  end
+  
   context 'POST' do
     subject { post :create, params: params}
 

@@ -1,4 +1,9 @@
 class CourseController < ApplicationController
+  def index
+    courses = Course.all
+    render json: courses, status: :ok
+  end
+  
   def create
     begin
       course = CourseService::Creator.new(params).execute
