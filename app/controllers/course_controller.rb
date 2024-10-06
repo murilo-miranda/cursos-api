@@ -16,4 +16,15 @@ class CourseController < ApplicationController
       render json: error.message, status: :not_found
     end
   end
+
+  def update
+    updated_course = CourseService::Editor.new(course_params).execute
+    render json: {id: updated_course.id, title: updated_course.title, description: updated_course.description}, status: :ok
+  end
+
+  private
+
+  def course_params
+    params.permit(:id, :title, :description, :end_date)
+  end
 end

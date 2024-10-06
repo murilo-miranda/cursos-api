@@ -89,4 +89,35 @@ describe CourseController, type: :controller do
       end
     end
   end
+
+  context 'PUT' do
+    subject { put :update, params: params}
+
+    let(:edited_course) {
+      Course.create(title: 'Old Title', description: 'Old Description', end_date: DateTime.now)
+    }
+    let(:params) {
+      {
+        id: edited_course.id,
+        title: 'New title',
+        description: 'New description'
+      }
+    }
+    let(:expected_response) do
+      {
+        id: edited_course.id,
+        title: 'New title',
+        description: 'New description'
+      }.to_json
+    end
+
+    context 'success' do
+      it 'updates a course' do
+        subject
+        
+        expect(subject).to have_http_status(200)
+        expect(response.body).to eq (expected_response)
+      end
+    end
+  end
 end
