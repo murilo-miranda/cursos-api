@@ -59,11 +59,15 @@ describe CourseController, type: :controller do
 
   context 'DELETE' do
     subject { delete :destroy, params: params}
-    let(:params) {{ id: 1 }}
+    let(:course) {
+      Course.create(title: 'Title', description: 'Description', end_date: DateTime.now)
+    }
 
     context 'success' do
+      let(:params) {{ id: course.id }}
+
       it 'deletes specified course' do
-        Course.create(title: 'Title', description: 'Description', end_date: DateTime.now)
+        course
 
         expect(subject).to have_http_status(204)
         expect(response.body).to eq ("{}")
@@ -72,12 +76,16 @@ describe CourseController, type: :controller do
     end
 
     context 'failure' do
-      it 'do not deletes specified course' do
-        Course.create(title: 'Title', description: 'Description', end_date: DateTime.now)
+      context 'id not found' do
+        let(:params) {{ id: 999 }}
 
-        expect(subject).to have_http_status(404)
-        expect(response.body).to eq ("Couldn't find Course with 'id'=1")
-        expect(Course.count).to eq 1
+        it 'do not deletes specified course' do
+          course
+  
+          expect(subject).to have_http_status(404)
+          expect(response.body).to eq ("Couldn't find Course with 'id'=#{params[:id]}")
+          expect(Course.count).to eq 1
+        end
       end
     end
   end
