@@ -37,7 +37,6 @@ describe CourseController, type: :controller do
     context 'success' do
       it 'return a list of courses' do
         expect(subject).to have_http_status(200)
-        # expect(response.body).to eq (Course.all.to_json)
         expect(response.body).to eq (expected_response)
       end
     end
