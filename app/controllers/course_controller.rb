@@ -6,7 +6,7 @@ class CourseController < ApplicationController
   
   def create
     begin
-      course = CourseService::Creator.new(params).execute
+      course = CourseService::Creator.new(course_params).execute
       render json: {}, status: :created
     rescue ActionController::ParameterMissing => error
       render json: error.message, status: :bad_request
@@ -15,7 +15,7 @@ class CourseController < ApplicationController
 
   def destroy
     begin
-      CourseService::Destroyer.new(params).execute
+      CourseService::Destroyer.new(course_params).execute
       render json: {}, status: :no_content
     rescue ActiveRecord::RecordNotFound => error
       render json: error.message, status: :not_found
