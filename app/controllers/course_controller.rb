@@ -1,7 +1,7 @@
 class CourseController < ApplicationController
   def index
-    courses = Course.all
-    render json: courses, status: :ok
+    serialized_courses = CourseSerializer.new(Course.all)
+    render json: serialized_courses, status: :ok
   end
   
   def create
