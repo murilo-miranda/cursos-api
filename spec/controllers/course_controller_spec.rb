@@ -9,14 +9,36 @@ describe CourseController, type: :controller do
     let!(:course2) {
       Course.create(title: 'Course 2', description: 'Description', end_date: DateTime.now)
     }
-    let!(:course3) {
-      Course.create(title: 'Course 3', description: 'Description', end_date: DateTime.now)
-    }
+    let(:expected_response) do
+      { 
+        data: [
+          {
+            id: course1.id.to_s,
+            type: 'course',
+            attributes: {
+              title: course1.title,
+              description: course1.description,
+              end_date: course1.end_date
+            }
+          },
+          {
+            id: course2.id.to_s,
+            type: 'course',
+            attributes: {
+              title: course2.title,
+              description: course2.description,
+              end_date: course2.end_date
+            }
+          }
+        ]
+      }.to_json
+    end
 
     context 'success' do
       it 'return a list of courses' do
         expect(subject).to have_http_status(200)
-        expect(response.body).to eq (Course.all.to_json)
+        # expect(response.body).to eq (Course.all.to_json)
+        expect(response.body).to eq (expected_response)
       end
     end
   end
