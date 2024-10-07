@@ -13,7 +13,7 @@ describe CourseController, type: :controller do
       Course.create(title: 'Course invalid because old date', description: 'Description', end_date: DateTime.yesterday)
     }
     let(:expected_response) do
-      { 
+      {
         data: [
           {
             id: course1.id.to_s,
@@ -44,9 +44,9 @@ describe CourseController, type: :controller do
       end
     end
   end
-  
+
   context 'POST' do
-    subject { post :create, params: params}
+    subject { post :create, params: params }
 
     context 'success' do
       let(:params) {
@@ -59,8 +59,8 @@ describe CourseController, type: :controller do
       let(:expected_response) do
         {}.to_json
       end
-  
-  
+
+
       it 'creates a course' do
         expect(subject).to have_http_status(201)
         expect(response.body).to eq (expected_response)
@@ -70,11 +70,11 @@ describe CourseController, type: :controller do
 
     context 'failure' do
       context 'title param missing' do
-        let(:params) {{}}
+        let(:params) { {} }
         let(:expected_response) do
           "param is missing or the value is empty: title"
         end
-  
+
         it 'do not creates a course' do
           expect(subject).to have_http_status(400)
           expect(response.body).to eq (expected_response)
@@ -91,7 +91,7 @@ describe CourseController, type: :controller do
         let(:expected_response) do
           "param is missing or the value is empty: description"
         end
-  
+
         it 'do not creates a course' do
           expect(subject).to have_http_status(400)
           expect(response.body).to eq (expected_response)
@@ -102,13 +102,13 @@ describe CourseController, type: :controller do
   end
 
   context 'DELETE' do
-    subject { delete :destroy, params: params}
+    subject { delete :destroy, params: params }
     let(:course) {
       Course.create(title: 'Title', description: 'Description', end_date: DateTime.now)
     }
 
     context 'success' do
-      let(:params) {{ id: course.id }}
+      let(:params) { { id: course.id } }
 
       it 'deletes specified course' do
         course
@@ -121,11 +121,11 @@ describe CourseController, type: :controller do
 
     context 'failure' do
       context 'id not found' do
-        let(:params) {{ id: 999 }}
+        let(:params) { { id: 999 } }
 
         it 'do not deletes specified course' do
           course
-  
+
           expect(subject).to have_http_status(404)
           expect(response.body).to eq ("Couldn't find Course with 'id'=#{params[:id]}")
           expect(Course.count).to eq 1
@@ -135,7 +135,7 @@ describe CourseController, type: :controller do
   end
 
   context 'PUT' do
-    subject { put :update, params: params}
+    subject { put :update, params: params }
 
     let(:edited_course) {
       Course.create(title: 'Old Title', description: 'Old Description', end_date: DateTime.now)
@@ -159,7 +159,7 @@ describe CourseController, type: :controller do
 
       it 'updates a course' do
         subject
-        
+
         expect(subject).to have_http_status(200)
         expect(response.body).to eq (expected_response)
       end
@@ -177,7 +177,7 @@ describe CourseController, type: :controller do
 
         it 'do not updates a course' do
           subject
-          
+
           expect(subject).to have_http_status(404)
           expect(response.body).to eq ("Couldn't find Course with 'id'=#{params[:id]}")
         end

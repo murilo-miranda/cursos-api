@@ -18,7 +18,7 @@ describe CourseService::Editor do
 
         it 'update' do
           subject
-          
+
           expect(Course.count).to eq 1
           expect(Course.find(edited_course.id).title).to eq 'New title'
           expect(Course.find(edited_course.id).description).to eq 'Old Description'
@@ -53,7 +53,7 @@ describe CourseService::Editor do
 
         it 'update' do
           subject
-          
+
           expect(Course.count).to eq 1
           expect(Course.find(edited_course.id).title).to eq 'New title'
           expect(Course.find(edited_course.id).description).to eq 'New description'

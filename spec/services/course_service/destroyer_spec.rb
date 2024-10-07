@@ -3,7 +3,7 @@ require 'rails_helper'
 describe CourseService::Destroyer do
   describe '.execute' do
     subject { described_class.new(params).execute }
-    let(:params) {{ id: course.id }}
+    let(:params) { { id: course.id } }
     let(:course) {
       Course.create(title: 'Title', description: 'Description', end_date: DateTime.now)
     }
