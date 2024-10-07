@@ -7,7 +7,10 @@ describe CourseController, type: :controller do
       Course.create(title: 'Course 1', description: 'Description', end_date: DateTime.now)
     }
     let!(:course2) {
-      Course.create(title: 'Course 2', description: 'Description', end_date: DateTime.now)
+      Course.create(title: 'Course 2', description: 'Description', end_date: DateTime.tomorrow)
+    }
+    let!(:course_invalid) {
+      Course.create(title: 'Course invalid because old date', description: 'Description', end_date: DateTime.yesterday)
     }
     let(:expected_response) do
       { 
@@ -35,7 +38,7 @@ describe CourseController, type: :controller do
     end
 
     context 'success' do
-      it 'return a list of courses' do
+      it 'return a list of active courses' do
         expect(subject).to have_http_status(200)
         expect(response.body).to eq (expected_response)
       end
