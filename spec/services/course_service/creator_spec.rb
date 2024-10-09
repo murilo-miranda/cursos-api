@@ -9,7 +9,7 @@ describe CourseService::Creator do
         {
           title: 'Curso',
           description: 'Descricao exemplo',
-          end_date: DateTime.now
+          end_date: '2024-12-25'
         }
       }
 
@@ -17,7 +17,8 @@ describe CourseService::Creator do
         expect { subject }.to change { Course.count }.by 1
         expect(Course.last.title).to eq 'Curso'
         expect(Course.last.description).to eq 'Descricao exemplo'
-        # expect(Course.last.end_date).to eq
+        puts params[:end_date].to_datetime
+        expect(Course.last.end_date).to eq params[:end_date].to_datetime
       end
     end
   end
