@@ -1,24 +1,101 @@
-# README
+# Projeto
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Aplicacao API voltada para gerenciamento de cursos.
 
-Things you may want to cover:
+Obs: Projeto em conjunto com repositorio https://github.com/murilo-miranda/cursos-web
 
-* Ruby version
+## Api
 
-* System dependencies
+Este repositório contém um projeto rails apenas com API que serve como back-end. É aqui que são gerenciados o banco de dados e os endpoints da aplicação 
 
-* Configuration
+Status: **Em desenvolvimento**
 
-* Database creation
+## Requisitos mínimos
 
-* Database initialization
+Para rodar este projeto, é necessário que você possua o Docker instalado na máquina que será utilizada. Caso ainda não possua, você pode seguir as instruções da documentação oficial para fazer a instalação:
 
-* How to run the test suite
+[Docker-Desktop](https://www.docker.com/products/docker-desktop/)
+ 
+### Instruções de como rodar o projeto
 
-* Services (job queues, cache servers, search engines, etc.)
+- Primeiro clone o repositório do projeto com o seguinte comando:
 
-* Deployment instructions
+    `git@github.com:murilo-miranda/cursos-web.git`
 
-* ...
+- Monte a imagem do projeto 
+
+    `docker build .`
+
+- Suba os containeres necessários para o funcionamento da app
+
+    `docker compose up -d`
+
+- Acessar container e executar comandos:
+
+  `docker ps`
+
+  - Obter o CONTAINER ID
+
+  `docker exec -it CONTAINER_ID bash`
+
+  - Acessa container
+
+  `rspec`
+
+  - Roda os testes
+
+### Endpoints
+
+#### `POST /course`
+  
+  Cria detalhes de um curso, com retorno 201 e body:
+
+  ```json
+    {
+    }
+  ```
+
+#### `GET /course`
+
+  Retorna uma lista de cursos, com retorno 200 e body:
+
+  ```json
+    {
+      "data": [
+        {
+          "id": "1",
+          "type": "course",
+          "attributes": {
+            "title": "Novo Curso Rails",
+            "description": "Curso basico de ruby on rails",
+            "end_date": "2024-10-10T00:00:00.000Z"
+          }
+        },
+        {
+          "id": "2",
+          "type": "course",
+          "attributes": {
+            "title": "Matematica",
+            "description": "Curso voltado a matematica",
+            "end_date": "2024-10-10T00:00:00.000Z"
+          }
+        }
+      ]
+    }
+  ```
+
+#### `PUT /course/:id`
+
+  Edita as informacoes de um curso, com retorno 200 e body:
+
+  ```json
+    {
+	    "id": 1,
+	    "title": "new title",
+	    "description": "new description"
+    }
+  ```
+
+#### `DELETE /course/:id`
+  
+  Deleta um curso baseado em seu identificador, com retorno 204 e sem body.
