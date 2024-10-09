@@ -142,9 +142,15 @@ describe CourseController, type: :controller do
     }
     let(:expected_response) do
       {
-        id: edited_course.id,
-        title: 'New title',
-        description: 'New description'
+        data: {
+          id: edited_course.id.to_s,
+          type: 'course',
+          attributes: {
+            title: 'New title',
+            description: 'New description',
+            end_date: edited_course.end_date
+          }
+        }
       }.to_json
     end
 
