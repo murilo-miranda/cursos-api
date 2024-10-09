@@ -20,7 +20,7 @@ Para rodar este projeto, é necessário que você possua o Docker instalado na m
 
 - Primeiro clone o repositório do projeto com o seguinte comando:
 
-    `git@github.com:murilo-miranda/cursos-web.git`
+    `git@github.com:murilo-miranda/cursos-api.git`
 
 - Monte a imagem do projeto 
 
@@ -51,8 +51,13 @@ Para rodar este projeto, é necessário que você possua o Docker instalado na m
   Cria detalhes de um curso, com retorno 201 e body:
 
   ```json
-    {
-    }
+    {}
+  ```
+
+  Nao cria detalhes de um curso, com retorno 400 e body:
+
+   ```json
+    {"param is missing or the value is empty": "attribute"}
   ```
 
 #### `GET /course`
@@ -90,12 +95,31 @@ Para rodar este projeto, é necessário que você possua o Docker instalado na m
 
   ```json
     {
-	    "id": 1,
-	    "title": "new title",
-	    "description": "new description"
+      "data": {
+        "id": "1",
+        "type": "course",
+        "attributes": {
+          "title": "new title",
+          "description": "new description",
+          "end_date": "2025-10-01T00:00:00.000Z"
+        }
+      }
     }
+  ```
+
+  Nao edita as informacoes de um curso, com retorno 404 e body:
+
+  ```json
+    {"Couldn't find Course with 'id'": "id"}
   ```
 
 #### `DELETE /course/:id`
   
   Deleta um curso baseado em seu identificador, com retorno 204 e sem body.
+
+  Nao deleta um curso baseado em seu identificador, com retorno 404 e body:
+
+  ```json
+    {"Couldn't find Course with 'id'": "id"}
+  ```
+
